@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import home from '../assets/home.jpg';
 
 function Home() {
+  const navigate = useNavigate();
+
   return (
     <PageStyle>
       <Title>Bem vindo ao GratiBox</Title>
@@ -10,8 +13,8 @@ function Home() {
       </Subtitle>
       <HomeImg src={home} alt="Yoga Girl" />
       <BackgroundColor>
-        <Button>Quero começar</Button>
-        <Redirect>Já sou grato</Redirect>
+        <Button onClick={() => navigate('/sign-up')}>Quero começar</Button>
+        <Redirect onClick={() => navigate('/sign-in')}>Já sou grato</Redirect>
       </BackgroundColor>
     </PageStyle>
   );
