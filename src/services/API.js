@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:4000';
-// https://gratibox-api.herokuapp.com
+const BASE_URL = 'https://gratibox-api.herokuapp.com';
 
 function postSignUp(body) {
   const promise = axios.post(`${BASE_URL}/sign-up`, body);
