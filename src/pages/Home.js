@@ -14,7 +14,7 @@ function Home() {
       <S.HomeImg src={home} alt="Yoga Girl" />
       <S.BackgroundColor>
         <S.Button onClick={() => navigate('/sign-up')}>Quero começar</S.Button>
-        <S.Redirect onClick={() => navigate('/sign-up')}>Já sou grato</S.Redirect>
+        <S.Redirect onClick={() => navigate('/sign-in')}>Já sou grato</S.Redirect>
       </S.BackgroundColor>
     </S.PageStyle>
   );

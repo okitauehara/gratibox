@@ -1,7 +1,155 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import Swal from 'sweetalert2';
+import { PageStyle, Redirect, Title } from '../styles/HomeStyles';
+import postSignUp from '../services/API';
+
 function SignUp() {
+  const [values, setValues] = useState({ name: '', email: '', password: '' });
+  const [isDisabled, setIsDisabled] = useState(false);
+  const emailRegex = '[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}';
+  const navigate = useNavigate();
+
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
+
+  const success = async () => {
+    await Swal.fire({
+      icon: 'success',
+      title: 'Usuário cadastrado!',
+    });
+    setIsDisabled(false);
+    navigate('/sign-in');
+  };
+
+  const error = (err) => {
+    if (err.response.status === 400) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Verifique se todos os dados inseridos são válidos',
+      });
+    }
+    if (err.response.status === 409) {
+      Swal.fire({
+        icon: 'error',
+        title: 'O e-mail inserido já está em uso',
+      });
+    }
+    setIsDisabled(false);
+  };
+
+  const submitSignUp = (event) => {
+    event.preventDefault();
+    setIsDisabled(true);
+    const body = values;
+    postSignUp(body)
+      .then(success)
+      .catch(error);
+  };
+
   return (
-    <h1>SignUp</h1>
+    <PageStyle>
+      <Title>Bem vindo ao GratiBox</Title>
+      <Form onSubmit={submitSignUp}>
+        <Input
+          required
+          placeholder="Nome"
+          type="text"
+          name="name"
+          value={values.name}
+          onChange={handleChange}
+          minLength="3"
+          autoFocus
+          disabled={isDisabled}
+          validation
+          autoComplete="off"
+        />
+        <Input
+          required
+          placeholder="E-mail"
+          type="email"
+          name="email"
+          value={values.email}
+          onChange={handleChange}
+          pattern={emailRegex}
+          disabled={isDisabled}
+          validation
+          autoComplete="off"
+        />
+        <Input
+          required
+          placeholder="Senha"
+          type="password"
+          name="password"
+          value={values.password}
+          onChange={handleChange}
+          minLength="8"
+          disabled={isDisabled}
+          validation
+        />
+        <Input
+          required
+          placeholder="Confirmar senha"
+          type="password"
+          pattern={values.password}
+          disabled={isDisabled}
+          validation
+        />
+        <Button type="submit" disabled={isDisabled}>Cadastrar</Button>
+      </Form>
+      <Link to="/sign-in" style={{ pointerEvents: isDisabled ? 'none' : 'all', color: '#FFFFFF' }}>
+        <Redirect>Já sou grato</Redirect>
+      </Link>
+    </PageStyle>
   );
 }
 
 export default SignUp;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Input = styled.input`
+  width: calc(100vw - 60px);
+  height: 45px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  border: 1px solid #604848;
+  outline: none;
+  border-radius: 10px;
+  padding-left: 10px;
+  margin-bottom: 20px;
+
+  &::placeholder {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    font-style: italic;
+    color: #C5C5C5;
+  }
+
+  &:valid {
+    background-color: ${(props) => (props.validation ? '#DDFADA' : '#FFFFFF')};
+  }
+`;
+
+const Button = styled.button`
+  width: calc(100vw - 60px);
+  height: 45px;
+  border: none;
+  border-radius: 10px;
+  background-color: #8C97EA;
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  color: #FFFFFF;
+  margin-top: 60px;
+  margin-bottom: 20px;
+`;
