@@ -14,7 +14,7 @@ function Pages() {
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/plans" element={<Plans />} />
       <Route path="/subdetails" element={<SubDetails />} />
-      <Route path="/subscription" element={<Subscription />} />
+      <Route path="/subscription/:planId" element={<Subscription />} />
     </Routes>
   );
 }

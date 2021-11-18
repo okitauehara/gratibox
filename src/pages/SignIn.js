@@ -16,25 +16,24 @@ function SignIn() {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
-  const success = async (res) => {
-    await setUser(res.data);
+  const success = (res) => {
+    setUser(res.data);
     localStorage.setItem('@user', JSON.stringify(res.data));
     setIsDisabled(false);
     if (user.planId) {
       navigate('/subdetails');
-    } else {
-      navigate('/plans');
     }
+    navigate('/plans');
   };
 
   const error = (err) => {
-    if (err.response.status === 400) {
+    if (err.response?.status === 400) {
       Swal.fire({
         icon: 'error',
         title: 'Verifique se todos os dados inseridos são válidos',
       });
     }
-    if (err.response.status === 401) {
+    if (err.response?.status === 401) {
       Swal.fire({
         icon: 'error',
         title: 'Email ou senha não encontrados',
