@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import { PageStyle, Redirect, Title } from '../styles/HomeStyles';
-import postSignUp from '../services/API';
+import { postSignUp } from '../services/API';
+import { Forms, Input, Button } from '../styles/AccessStyle';
 
 function SignUp() {
   const [values, setValues] = useState({ name: '', email: '', password: '' });
@@ -52,7 +52,7 @@ function SignUp() {
   return (
     <PageStyle>
       <Title>Bem vindo ao GratiBox</Title>
-      <Form onSubmit={submitSignUp}>
+      <Forms onSubmit={submitSignUp}>
         <Input
           required
           placeholder="Nome"
@@ -98,7 +98,7 @@ function SignUp() {
           validation
         />
         <Button type="submit" disabled={isDisabled}>Cadastrar</Button>
-      </Form>
+      </Forms>
       <Link to="/sign-in" style={{ pointerEvents: isDisabled ? 'none' : 'all', color: '#FFFFFF' }}>
         <Redirect>Já sou grato</Redirect>
       </Link>
@@ -107,49 +107,3 @@ function SignUp() {
 }
 
 export default SignUp;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Input = styled.input`
-  width: calc(100vw - 60px);
-  height: 45px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 20px;
-  font-weight: 500;
-  border: 1px solid #604848;
-  outline: none;
-  border-radius: 10px;
-  padding-left: 10px;
-  margin-bottom: 20px;
-
-  &::placeholder {
-    font-family: 'Roboto', sans-serif;
-    font-size: 20px;
-    font-weight: 500;
-    font-style: italic;
-    color: #C5C5C5;
-  }
-
-  &:valid {
-    background-color: ${(props) => (props.validation ? '#DDFADA' : '#FFFFFF')};
-  }
-`;
-
-const Button = styled.button`
-  width: calc(100vw - 60px);
-  height: 45px;
-  border: none;
-  border-radius: 10px;
-  background-color: #8C97EA;
-  font-family: 'Roboto', sans-serif;
-  font-size: 20px;
-  font-weight: 500;
-  color: #FFFFFF;
-  margin-top: 60px;
-  margin-bottom: 20px;
-`;
