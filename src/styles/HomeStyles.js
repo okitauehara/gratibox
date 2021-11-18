@@ -11,6 +11,7 @@ const PageStyle = styled.section`
 const Title = styled.h1`
   font-size: 28px;
   margin-bottom: 45px;
+  text-align: center;
 `;
 
 const Subtitle = styled.h2`
