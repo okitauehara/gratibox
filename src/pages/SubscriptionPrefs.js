@@ -7,7 +7,7 @@ import { PageStyle, Subtitle, Title } from '../styles/HomeStyles';
 import signatureImg from '../assets/signature.jpg';
 import UserContext from '../contexts/UserContext';
 
-function Subscription() {
+function SubscriptionPrefs() {
   const { user } = useContext(UserContext);
   const { planId } = useParams();
   const [values, setValues] = useState({
@@ -180,7 +180,7 @@ function Subscription() {
   );
 }
 
-export default Subscription;
+export default SubscriptionPrefs;
 
 const Container = styled.div`
   width: calc(100vw - 60px);

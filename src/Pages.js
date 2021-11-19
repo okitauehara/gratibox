@@ -4,7 +4,8 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Plans from './pages/Plans';
 import SubDetails from './pages/SubDetails';
-import Subscription from './pages/Subscription';
+import SubscriptionPrefs from './pages/SubscriptionPrefs';
+import SubscriptionAddress from './pages/SubscriptionAddress';
 
 function Pages() {
   return (
@@ -14,7 +15,8 @@ function Pages() {
       <Route path="/sign-up" element={<SignUp />} />
       <Route path="/plans" element={<Plans />} />
       <Route path="/subdetails" element={<SubDetails />} />
-      <Route path="/subscription/:planId" element={<Subscription />} />
+      <Route path="/subscription-prefs/:planId" element={<SubscriptionPrefs />} />
+      <Route path="/subscription-address/:planId" element={<SubscriptionAddress />} />
     </Routes>
   );
 }
