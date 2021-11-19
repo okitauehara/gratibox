@@ -45,7 +45,7 @@ function SubscriptionPrefs() {
   };
 
   const verifyChoices = () => {
-    if (!values.date || (!values.teas && !values.incense && !values.organics)) {
+    if (!values.delivery_date || (!values.teas && !values.incense && !values.organics)) {
       Swal.fire({
         icon: 'warning',
         title: 'Ops...',

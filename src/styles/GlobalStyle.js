@@ -37,6 +37,11 @@ body {
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
 }
+button {
+  &:active {
+    filter: brightness(1.1);
+  }
+}
 ol, ul {
   list-style: none;
 }

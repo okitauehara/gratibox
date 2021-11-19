@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import UserContext from '../contexts/UserContext';
@@ -12,6 +12,15 @@ function SignIn() {
   const navigate = useNavigate();
   const { user, setUser } = useContext(UserContext);
 
+  useEffect(() => {
+    if (user) {
+      if (user.planId) {
+        navigate('/subdetails');
+      }
+      navigate('/plans');
+    }
+  }, [user]);
+
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
@@ -20,10 +29,6 @@ function SignIn() {
     setUser(res.data);
     localStorage.setItem('@user', JSON.stringify(res.data));
     setIsDisabled(false);
-    if (user.planId) {
-      navigate('/subdetails');
-    }
-    navigate('/plans');
   };
 
   const error = (err) => {
