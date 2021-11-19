@@ -1,13 +1,41 @@
 /* eslint-disable max-len */
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
+import cep from 'cep-promise';
 import UserContext from '../contexts/UserContext';
 import { PageStyle, Title, Subtitle } from '../styles/HomeStyles';
 import * as S from '../styles/SubscriptionStyle';
 import signatureImg from '../assets/signature.jpg';
+import SignatureContext from '../contexts/SignatureContext';
+import { Forms } from '../styles/AccessStyle';
 
 function SubscriptionAddress() {
   const { user } = useContext(UserContext);
+  const { values, setValues } = useContext(SignatureContext);
+  const [cepData, setCepData] = useState('');
+
+  const handleChange = (event) => {
+    setValues({ ...values, [event.target.name]: event.target.value });
+  };
+
+  const searchCep = () => {
+    const cepCheck = values.cep.replace(/[^0-9]/g, '');
+    cep(cepCheck)
+      .then((res) => setCepData(res))
+      .catch(() => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Ops...',
+          text: 'O CEP não retornou resultados, verifique e tente novamente',
+        });
+        setCepData('');
+      });
+  };
+
+  const postSignature = (event) => {
+    event.preventDefault();
+  };
 
   return (
     <PageStyle style={{ marginBottom: '30px' }}>
@@ -17,41 +45,66 @@ function SubscriptionAddress() {
         {user?.name}
       </Title>
       <Subtitle>“Agradecer é arte de atrair coisas boas”</Subtitle>
-      <S.Container>
-        <S.SubscriptionImg src={signatureImg} alt="Yoga Girl on Yellow Mat" />
-        <Instruction>
-          Ao inserir o CEP, os campos de endereço serão preenchidos automaticamente.
-          <br />
-          <span>
-            Não sabe seu CEP?
-            {' '}
-            <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank" rel="noreferrer">Consulte aqui</a>
-          </span>
-        </Instruction>
-        <Input placeholder="Nome completo" />
-        <Inline>
-          <Input placeholder="CEP" />
-          <Input placeholder="nº" />
-        </Inline>
-        <S.PlanBox>
-          <S.Text>
-            Endereço de entrega
-          </S.Text>
-        </S.PlanBox>
-        <Inline>
+      <Forms onSubmit={postSignature}>
+        <S.Container>
+          <S.SubscriptionImg src={signatureImg} alt="Yoga Girl on Yellow Mat" />
+          <Instruction>
+            Ao inserir o CEP, os campos de endereço serão preenchidos automaticamente.
+            <br />
+            <span>
+              Não sabe seu CEP?
+              {' '}
+              <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank" rel="noreferrer">Consulte aqui</a>
+            </span>
+          </Instruction>
+          <Input
+            required
+            placeholder="Nome completo"
+            type="text"
+            name="full_name"
+            value={values.email}
+            onChange={handleChange}
+            autoFocus
+          />
+          <Inline>
+            <Input
+              required
+              placeholder="CEP (8 dígitos)"
+              type="text"
+              name="cep"
+              value={values.cep}
+              onChange={handleChange}
+              onBlur={searchCep}
+            />
+            <Input
+              required
+              placeholder="nº"
+              type="number"
+              name="number"
+              value={values.number}
+              onChange={handleChange}
+            />
+          </Inline>
           <S.PlanBox>
             <S.Text>
-              Cidade
+              {!cepData ? 'Endereço de entrega' : cepData.street}
             </S.Text>
           </S.PlanBox>
-          <S.PlanBox>
-            <S.Text>
-              Estado
-            </S.Text>
-          </S.PlanBox>
-        </Inline>
-      </S.Container>
-      <S.Button>Finalizar</S.Button>
+          <Inline>
+            <S.PlanBox>
+              <S.Text>
+                {!cepData ? 'Cidade' : cepData.city}
+              </S.Text>
+            </S.PlanBox>
+            <S.PlanBox>
+              <S.Text>
+                {!cepData ? 'Estado' : cepData.state}
+              </S.Text>
+            </S.PlanBox>
+          </Inline>
+        </S.Container>
+        <S.Button type="submit">Finalizar</S.Button>
+      </Forms>
     </PageStyle>
   );
 }
@@ -62,6 +115,7 @@ const Inline = styled.div`
   display: grid;
   grid-template-columns: 3fr 1fr;
   grid-gap: 5px;
+  width: 100%;
 `;
 
 const Input = styled.input`

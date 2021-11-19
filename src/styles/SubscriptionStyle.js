@@ -19,7 +19,7 @@ const SubscriptionImg = styled.img`
 
 const PlanBox = styled.div`
   width: 100%;
-  height: 40px;
+  height: auto;
   background-color: #E0D1ED;
   border-radius: 5px;
   padding: 10px;
