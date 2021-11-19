@@ -48,7 +48,7 @@ function Plans() {
           Você recebe um box por semana.
           Ideal para quem quer exercer a gratidão todos os dias.
         </PlanDescription>
-        <Link to="/subscription/1">
+        <Link to="/subscription-prefs/1">
           <Button>Assinar</Button>
         </Link>
       </Container>
@@ -58,7 +58,7 @@ function Plans() {
           Você recebe um box por mês.
           Ideal para quem está começando agora.
         </PlanDescription>
-        <Link to="/subscription/2">
+        <Link to="/subscription-prefs/2">
           <Button>Assinar</Button>
         </Link>
       </Container>

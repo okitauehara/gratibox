@@ -1,18 +1,17 @@
 import styled from 'styled-components';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { TiArrowDown } from 'react-icons/ti';
 import Swal from 'sweetalert2';
 import { useContext, useState, useEffect } from 'react';
 import { PageStyle, Subtitle, Title } from '../styles/HomeStyles';
 import signatureImg from '../assets/signature.jpg';
 import UserContext from '../contexts/UserContext';
+import SignatureContext from '../contexts/SignatureContext';
 
 function SubscriptionPrefs() {
   const { user } = useContext(UserContext);
+  const { values, setValues } = useContext(SignatureContext);
   const { planId } = useParams();
-  const [values, setValues] = useState({
-    date: '', teas: false, incense: false, organics: false,
-  });
   const [dateIsHidden, setDateIsHidden] = useState(true);
   const [productIsHidden, setProductIsHidden] = useState(true);
   const navigate = useNavigate();
@@ -68,7 +67,7 @@ function SubscriptionPrefs() {
             <Text>Entrega</Text>
             <ArrowDown
               onClick={() => setDateIsHidden(!dateIsHidden)}
-              isHidden={dateIsHidden}
+              hidden={dateIsHidden}
             />
           </Visible>
         </DropdownBox>
@@ -138,7 +137,7 @@ function SubscriptionPrefs() {
             <Text>Quero receber</Text>
             <ArrowDown
               onClick={() => setProductIsHidden(!productIsHidden)}
-              isHidden={productIsHidden}
+              hidden={productIsHidden}
             />
           </Visible>
         </DropdownBox>
@@ -148,7 +147,6 @@ function SubscriptionPrefs() {
               type="checkbox"
               id="teas"
               name="teas"
-              value="Chás"
               onChange={handleChangeCheckBox}
             />
             <Label htmlFor="teas">Chás</Label>
@@ -158,7 +156,6 @@ function SubscriptionPrefs() {
               type="checkbox"
               id="incense"
               name="incense"
-              value="Chás"
               onChange={handleChangeCheckBox}
             />
             <Label htmlFor="incense">Incensos</Label>
@@ -168,14 +165,15 @@ function SubscriptionPrefs() {
               type="checkbox"
               id="organics"
               name="organics"
-              value="Chás"
               onChange={handleChangeCheckBox}
             />
             <Label htmlFor="organics">Produtos Orgânicos</Label>
           </div>
         </ExpandedCheck>
       </Container>
-      <Button>Próximo</Button>
+      <Link to={`/subscription-address/${planId}`}>
+        <Button>Próximo</Button>
+      </Link>
     </PageStyle>
   );
 }
@@ -231,7 +229,7 @@ const ArrowDown = styled(TiArrowDown)`
   width: 23px;
   height: 23px;
   color: #4D65A8;
-  transform: ${(props) => (props.isHidden ? 'none' : 'rotate(180deg)')};
+  transform: ${(props) => (props.hidden ? 'none' : 'rotate(180deg)')};
   transition: .1s;
 `;
 
