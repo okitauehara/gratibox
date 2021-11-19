@@ -35,6 +35,15 @@ function SubscriptionAddress() {
 
   const postSignature = (event) => {
     event.preventDefault();
+    if (!cepData || !values.cep || !values.number || !values.full_name) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Ops...',
+        text: 'Precisamos que você preencha os 3 campos solicitados com dados válidos!',
+      });
+    } else {
+      // Lógica de inserção dos dados na API!
+    }
   };
 
   return (
