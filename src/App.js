@@ -10,7 +10,7 @@ function App() {
   const userData = JSON.parse(localStorage.getItem('@user'));
   const [user, setUser] = useState(userData);
   const [values, setValues] = useState({
-    date: '', teas: false, incense: false, organics: false, cep: '', number: '', full_name: '',
+    delivery_date: '', teas: false, incense: false, organics: false, cep: '', number: '', full_name: '',
   });
 
   return (

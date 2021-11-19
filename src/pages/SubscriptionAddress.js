@@ -1,5 +1,6 @@
 /* eslint-disable max-len */
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import cep from 'cep-promise';
@@ -14,10 +15,32 @@ function SubscriptionAddress() {
   const { user } = useContext(UserContext);
   const { values, setValues } = useContext(SignatureContext);
   const [cepData, setCepData] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
+
+  useEffect(async () => {
+    if (!user) {
+      await Swal.fire({
+        title: 'Login necessário',
+        text: 'Para acessar essa rota, você precisa estar logado',
+        icon: 'warning',
+        showDenyButton: true,
+        confirmButtonText: 'Fazer Login',
+        denyButtonText: 'Ir para Home',
+        confirmButtonColor: '#8C97EA',
+        denyButtonColor: '#AAA',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/sign-in');
+        } else {
+          navigate('/');
+        }
+      });
+    }
+  }, []);
 
   const searchCep = () => {
     const cepCheck = values.cep.replace(/[^0-9]/g, '');

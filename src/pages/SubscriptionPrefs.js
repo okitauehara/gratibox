@@ -88,7 +88,7 @@ function SubscriptionPrefs() {
               <input
                 type="radio"
                 id="monday"
-                name="date"
+                name="delivery_date"
                 value="Segunda-Feira"
                 onChange={handleChange}
               />
@@ -98,14 +98,20 @@ function SubscriptionPrefs() {
               <input
                 type="radio"
                 id="wednesday"
-                name="date"
+                name="delivery_date"
                 value="Quarta-Feira"
                 onChange={handleChange}
               />
               <S.Label htmlFor="wednesday">Quarta-feira</S.Label>
             </div>
             <div>
-              <input type="radio" id="friday" name="date" value="Sexta-Feira" onChange={handleChange} />
+              <input
+                type="radio"
+                id="friday"
+                name="delivery_date"
+                value="Sexta-Feira"
+                onChange={handleChange}
+              />
               <S.Label htmlFor="friday">Sexta-feira</S.Label>
             </div>
           </S.ExpandedDate>
@@ -115,7 +121,7 @@ function SubscriptionPrefs() {
               <input
                 type="radio"
                 id="01"
-                name="date"
+                name="delivery_date"
                 value="Dia 01"
                 onChange={handleChange}
               />
@@ -125,7 +131,7 @@ function SubscriptionPrefs() {
               <input
                 type="radio"
                 id="10"
-                name="date"
+                name="delivery_date"
                 value="Dia 10"
                 onChange={handleChange}
               />
@@ -135,7 +141,7 @@ function SubscriptionPrefs() {
               <input
                 type="radio"
                 id="20"
-                name="date"
+                name="delivery_date"
                 value="Dia 20"
                 onChange={handleChange}
               />
