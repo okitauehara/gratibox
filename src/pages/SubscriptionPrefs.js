@@ -1,4 +1,4 @@
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useContext, useState, useEffect } from 'react';
 import { PageStyle, Subtitle, Title } from '../styles/HomeStyles';
@@ -42,6 +42,18 @@ function SubscriptionPrefs() {
 
   const handleChangeCheckBox = (event) => {
     setValues({ ...values, [event.target.name]: event.target.checked });
+  };
+
+  const verifyChoices = () => {
+    if (!values.date || (!values.teas && !values.incense && !values.organics)) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Ops...',
+        text: 'Precisamos que você selecione ao menos uma data de entrega e um produto que deseja receber.',
+      });
+    } else {
+      navigate(`/subscription-address/${planId}`);
+    }
   };
 
   return (
@@ -170,9 +182,7 @@ function SubscriptionPrefs() {
           </div>
         </S.ExpandedCheck>
       </S.Container>
-      <Link to={`/subscription-address/${planId}`}>
-        <S.Button>Próximo</S.Button>
-      </Link>
+      <S.Button onClick={verifyChoices}>Próximo</S.Button>
     </PageStyle>
   );
 }
