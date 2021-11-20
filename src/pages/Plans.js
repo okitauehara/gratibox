@@ -1,7 +1,9 @@
-import styled from 'styled-components';
 import { useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import {
+  Container, ImgBox, PlanDescription, Button,
+} from '../styles/PlansStyle';
 import { PageStyle, Subtitle, Title } from '../styles/HomeStyles';
 import weekImg from '../assets/week_plan.jpg';
 import monthImg from '../assets/month_plan.jpg';
@@ -46,7 +48,7 @@ function Plans() {
           Você recebe um box por semana.
           Ideal para quem quer exercer a gratidão todos os dias.
         </PlanDescription>
-        <Link to="/subscription/1">
+        <Link to="/subscription-prefs/1">
           <Button>Assinar</Button>
         </Link>
       </Container>
@@ -56,7 +58,7 @@ function Plans() {
           Você recebe um box por mês.
           Ideal para quem está começando agora.
         </PlanDescription>
-        <Link to="/subscription/2">
+        <Link to="/subscription-prefs/2">
           <Button>Assinar</Button>
         </Link>
       </Container>
@@ -65,37 +67,3 @@ function Plans() {
 }
 
 export default Plans;
-
-const Container = styled.article`
-  width: calc(100vw - 60px);
-  background-color: #E5CDB3;
-  border-radius: 25px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 30px;
-  padding: 25px;
-`;
-
-const ImgBox = styled.img`
-  width: fit-content;
-  height: 200px;
-`;
-
-const PlanDescription = styled.p`
-  font-size: 18px;
-  color: #4D65A8;
-  margin: 20px 0px;
-`;
-
-const Button = styled.button`
-  width: 50vw;
-  height: 40px;
-  border: none;
-  border-radius: 10px;
-  background-color: #8C97EA;
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: #FFFFFF;
-`;
