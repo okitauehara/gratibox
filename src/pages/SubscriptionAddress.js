@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import { useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import cep from 'cep-promise';
@@ -12,6 +12,7 @@ import SignatureContext from '../contexts/SignatureContext';
 import { Forms } from '../styles/AccessStyle';
 
 function SubscriptionAddress() {
+  const { planId } = useParams();
   const { user } = useContext(UserContext);
   const { values, setValues } = useContext(SignatureContext);
   const [cepData, setCepData] = useState('');
@@ -56,8 +57,16 @@ function SubscriptionAddress() {
       });
   };
 
-  const postSignature = (event) => {
+  const submitSignature = async (event) => {
     event.preventDefault();
+    if (!values.delivery_date || !values.products.length) {
+      await Swal.fire({
+        icon: 'warning',
+        title: 'Ops...',
+        text: 'Parece que os dados selecionados na página anterior se perderam! Você será redirecionado para reinserí-los',
+      });
+      navigate(`/subscription-prefs/${planId}`);
+    }
     if (!cepData || !values.cep || !values.number || !values.full_name) {
       Swal.fire({
         icon: 'warning',
@@ -65,7 +74,7 @@ function SubscriptionAddress() {
         text: 'Precisamos que você preencha os 3 campos solicitados com dados válidos!',
       });
     } else {
-      // Lógica de inserção dos dados na API!
+      // Lógica da API
     }
   };
 
@@ -77,7 +86,7 @@ function SubscriptionAddress() {
         {user?.name}
       </Title>
       <Subtitle>“Agradecer é arte de atrair coisas boas”</Subtitle>
-      <Forms onSubmit={postSignature}>
+      <Forms onSubmit={submitSignature}>
         <S.Container>
           <S.SubscriptionImg src={signatureImg} alt="Yoga Girl on Yellow Mat" />
           <Instruction>
