@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { useContext, useState, useEffect } from 'react';
@@ -40,12 +41,16 @@ function SubscriptionPrefs() {
     setValues({ ...values, [event.target.name]: event.target.value });
   };
 
-  const handleChangeCheckBox = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.checked });
+  const handleChangeCheckBox = async (event) => {
+    if (values.products.length && values.products.some((value) => value === event.target.value)) {
+      setValues({ ...values, [event.target.name]: values.products.filter((value) => value !== event.target.value) });
+    } else {
+      setValues({ ...values, [event.target.name]: [...values.products, event.target.value] });
+    }
   };
 
   const verifyChoices = () => {
-    if (!values.delivery_date || (!values.teas && !values.incense && !values.organics)) {
+    if (!values.delivery_date || !values.products.length) {
       Swal.fire({
         icon: 'warning',
         title: 'Ops...',
@@ -89,7 +94,7 @@ function SubscriptionPrefs() {
                 type="radio"
                 id="monday"
                 name="delivery_date"
-                value="Segunda-Feira"
+                value="monday"
                 onChange={handleChange}
               />
               <S.Label htmlFor="monday">Segunda-feira</S.Label>
@@ -99,7 +104,7 @@ function SubscriptionPrefs() {
                 type="radio"
                 id="wednesday"
                 name="delivery_date"
-                value="Quarta-Feira"
+                value="wednesday"
                 onChange={handleChange}
               />
               <S.Label htmlFor="wednesday">Quarta-feira</S.Label>
@@ -109,7 +114,7 @@ function SubscriptionPrefs() {
                 type="radio"
                 id="friday"
                 name="delivery_date"
-                value="Sexta-Feira"
+                value="friday"
                 onChange={handleChange}
               />
               <S.Label htmlFor="friday">Sexta-feira</S.Label>
@@ -122,7 +127,7 @@ function SubscriptionPrefs() {
                 type="radio"
                 id="01"
                 name="delivery_date"
-                value="Dia 01"
+                value="day 01"
                 onChange={handleChange}
               />
               <S.Label htmlFor="01">Dia 01</S.Label>
@@ -132,7 +137,7 @@ function SubscriptionPrefs() {
                 type="radio"
                 id="10"
                 name="delivery_date"
-                value="Dia 10"
+                value="day 10"
                 onChange={handleChange}
               />
               <S.Label htmlFor="10">Dia 10</S.Label>
@@ -142,7 +147,7 @@ function SubscriptionPrefs() {
                 type="radio"
                 id="20"
                 name="delivery_date"
-                value="Dia 20"
+                value="day 20"
                 onChange={handleChange}
               />
               <S.Label htmlFor="20">Dia 20</S.Label>
@@ -163,7 +168,8 @@ function SubscriptionPrefs() {
             <input
               type="checkbox"
               id="teas"
-              name="teas"
+              name="products"
+              value="1"
               onChange={handleChangeCheckBox}
             />
             <S.Label htmlFor="teas">Chás</S.Label>
@@ -172,7 +178,8 @@ function SubscriptionPrefs() {
             <input
               type="checkbox"
               id="incense"
-              name="incense"
+              name="products"
+              value="2"
               onChange={handleChangeCheckBox}
             />
             <S.Label htmlFor="incense">Incensos</S.Label>
@@ -181,7 +188,8 @@ function SubscriptionPrefs() {
             <input
               type="checkbox"
               id="organics"
-              name="organics"
+              name="products"
+              value="3"
               onChange={handleChangeCheckBox}
             />
             <S.Label htmlFor="organics">Produtos Orgânicos</S.Label>
