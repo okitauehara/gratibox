@@ -16,8 +16,9 @@ function SignIn() {
     if (user) {
       if (user.planId) {
         navigate('/subdetails');
+      } else {
+        navigate('/plans');
       }
-      navigate('/plans');
     }
   }, [user]);
 

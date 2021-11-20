@@ -10,12 +10,15 @@ import * as S from '../styles/SubscriptionStyle';
 import signatureImg from '../assets/signature.jpg';
 import SignatureContext from '../contexts/SignatureContext';
 import { Forms } from '../styles/AccessStyle';
+import { postSignature } from '../services/API';
 
 function SubscriptionAddress() {
   const { planId } = useParams();
   const { user } = useContext(UserContext);
-  const { values, setValues } = useContext(SignatureContext);
-  const [cepData, setCepData] = useState('');
+  const {
+    values, setValues, cepData, setCepData,
+  } = useContext(SignatureContext);
+  const [isDisabled, setIsDisabled] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (event) => {
@@ -57,24 +60,60 @@ function SubscriptionAddress() {
       });
   };
 
+  const success = async () => {
+    await Swal.fire({
+      icon: 'success',
+      title: 'Assinatura Confirmada!',
+      text: 'Confira a seguir o que reservamos para você :)',
+    });
+    navigate('/subdetails');
+  };
+
+  const error = async (err) => {
+    if (err.response?.status === 400) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Verifique se todos os dados inseridos são válidos',
+      });
+      setIsDisabled(false);
+    } else if (err.response?.status === 404) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Usuário não encontrado',
+      });
+      setIsDisabled(false);
+    } else {
+      await Swal.fire({
+        icon: 'error',
+        title: 'Houve um erro ao validar seu acesso a essa página, você será redirecionado',
+      });
+      setIsDisabled(false);
+      navigate('/sign-in');
+    }
+  };
+
   const submitSignature = async (event) => {
     event.preventDefault();
+    setIsDisabled(true);
     if (!values.delivery_date || !values.products.length) {
       await Swal.fire({
         icon: 'warning',
         title: 'Ops...',
         text: 'Parece que os dados selecionados na página anterior se perderam! Você será redirecionado para reinserí-los',
       });
+      setIsDisabled(false);
       navigate(`/subscription-prefs/${planId}`);
-    }
-    if (!cepData || !values.cep || !values.number || !values.full_name) {
+    } else if (!cepData || !values.cep || !values.number || !values.full_name) {
       Swal.fire({
         icon: 'warning',
         title: 'Ops...',
         text: 'Precisamos que você preencha os 3 campos solicitados com dados válidos!',
       });
+      setIsDisabled(false);
     } else {
-      // Lógica da API
+      postSignature(user.token, planId, values)
+        .then(success)
+        .catch(error);
     }
   };
 
@@ -103,8 +142,9 @@ function SubscriptionAddress() {
             placeholder="Nome completo"
             type="text"
             name="full_name"
-            value={values.email}
+            value={values.full_name}
             onChange={handleChange}
+            disabled={isDisabled}
             autoFocus
           />
           <Inline>
@@ -116,6 +156,7 @@ function SubscriptionAddress() {
               value={values.cep}
               onChange={handleChange}
               onBlur={searchCep}
+              disabled={isDisabled}
             />
             <Input
               required
@@ -124,6 +165,7 @@ function SubscriptionAddress() {
               name="number"
               value={values.number}
               onChange={handleChange}
+              disabled={isDisabled}
             />
           </Inline>
           <S.PlanBox>
@@ -144,7 +186,7 @@ function SubscriptionAddress() {
             </S.PlanBox>
           </Inline>
         </S.Container>
-        <S.Button type="submit">Finalizar</S.Button>
+        <S.Button type="submit" disabled={isDisabled}>Finalizar</S.Button>
       </Forms>
     </PageStyle>
   );

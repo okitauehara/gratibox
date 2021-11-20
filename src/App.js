@@ -12,10 +12,14 @@ function App() {
   const [values, setValues] = useState({
     delivery_date: '', products: '', cep: '', number: '', full_name: '',
   });
+  const [cepData, setCepData] = useState('');
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <SignatureContext.Provider value={{ values, setValues }}>
+      <SignatureContext.Provider value={{
+        values, setValues, cepData, setCepData,
+      }}
+      >
         <Router>
           <GlobalStyle />
           <Pages />
