@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 import { useContext, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import cep from 'cep-promise';
 import UserContext from '../contexts/UserContext';
@@ -128,7 +127,7 @@ function SubscriptionAddress() {
       <Forms onSubmit={submitSignature}>
         <S.Container>
           <S.SubscriptionImg src={signatureImg} alt="Yoga Girl on Yellow Mat" />
-          <Instruction>
+          <S.Instruction>
             Ao inserir o CEP, os campos de endereço serão preenchidos automaticamente.
             <br />
             <span>
@@ -136,8 +135,8 @@ function SubscriptionAddress() {
               {' '}
               <a href="https://buscacepinter.correios.com.br/app/endereco/index.php" target="_blank" rel="noreferrer">Consulte aqui</a>
             </span>
-          </Instruction>
-          <Input
+          </S.Instruction>
+          <S.Input
             required
             placeholder="Nome completo"
             type="text"
@@ -147,8 +146,8 @@ function SubscriptionAddress() {
             disabled={isDisabled}
             autoFocus
           />
-          <Inline>
-            <Input
+          <S.Inline>
+            <S.Input
               required
               placeholder="CEP (8 dígitos)"
               type="text"
@@ -158,7 +157,7 @@ function SubscriptionAddress() {
               onBlur={searchCep}
               disabled={isDisabled}
             />
-            <Input
+            <S.Input
               required
               placeholder="nº"
               type="number"
@@ -167,13 +166,13 @@ function SubscriptionAddress() {
               onChange={handleChange}
               disabled={isDisabled}
             />
-          </Inline>
+          </S.Inline>
           <S.PlanBox>
             <S.Text>
               {!cepData ? 'Endereço de entrega' : cepData.street}
             </S.Text>
           </S.PlanBox>
-          <Inline>
+          <S.Inline>
             <S.PlanBox>
               <S.Text>
                 {!cepData ? 'Cidade' : cepData.city}
@@ -184,7 +183,7 @@ function SubscriptionAddress() {
                 {!cepData ? 'Estado' : cepData.state}
               </S.Text>
             </S.PlanBox>
-          </Inline>
+          </S.Inline>
         </S.Container>
         <S.Button type="submit" disabled={isDisabled}>Finalizar</S.Button>
       </Forms>
@@ -193,51 +192,3 @@ function SubscriptionAddress() {
 }
 
 export default SubscriptionAddress;
-
-const Inline = styled.div`
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-gap: 5px;
-  width: 100%;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  height: 40px;
-  background-color: #E0D1ED;
-  border: none;
-  border-radius: 5px;
-  outline: none;
-  font-family: 'Roboto', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: #4D65A8;
-  padding: 10px;
-  margin-bottom: 5px;
-
-  &::placeholder {
-    font-family: 'Roboto', sans-serif;
-    font-size: 18px;
-    font-weight: 400;
-    color: #4D65A8;
-    opacity: 0.7;
-  }
-`;
-
-const Instruction = styled.p`
-  font-size: 18px;
-  font-weight: 700;
-  color: #4D65A8;
-  margin-bottom: 10px;
-
-  & span {
-    font-size: 12px;
-    font-style: italic;
-    font-weight: 400;
-  }
-
-  & a {
-    color: #4D65A8;
-    text-decoration: underline;
-  }
-`;

@@ -93,6 +93,54 @@ const Button = styled.button`
   margin-top: 20px;
 `;
 
+const Inline = styled.div`
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-gap: 5px;
+  width: 100%;
+`;
+
+const Input = styled.input`
+  width: 100%;
+  height: 40px;
+  background-color: #E0D1ED;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #4D65A8;
+  padding: 10px;
+  margin-bottom: 5px;
+
+  &::placeholder {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #4D65A8;
+    opacity: 0.7;
+  }
+`;
+
+const Instruction = styled.p`
+  font-size: 18px;
+  font-weight: 700;
+  color: #4D65A8;
+  margin-bottom: 10px;
+
+  & span {
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 400;
+  }
+
+  & a {
+    color: #4D65A8;
+    text-decoration: underline;
+  }
+`;
+
 export {
   Container,
   SubscriptionImg,
@@ -105,4 +153,7 @@ export {
   ExpandedCheck,
   Label,
   Button,
+  Inline,
+  Input,
+  Instruction,
 };
