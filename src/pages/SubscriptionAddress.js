@@ -13,7 +13,7 @@ import { postSignature } from '../services/API';
 
 function SubscriptionAddress() {
   const { planId } = useParams();
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const {
     values, setValues, cepData, setCepData,
   } = useContext(SignatureContext);
@@ -76,17 +76,22 @@ function SubscriptionAddress() {
       });
       setIsDisabled(false);
     } else if (err.response?.status === 404) {
-      Swal.fire({
+      await Swal.fire({
         icon: 'error',
         title: 'Usuário não encontrado',
       });
       setIsDisabled(false);
+      localStorage.removeItem('@user');
+      setUser('');
+      navigate('/sign-in');
     } else {
       await Swal.fire({
         icon: 'error',
         title: 'Houve um erro ao validar seu acesso a essa página, você será redirecionado',
       });
       setIsDisabled(false);
+      localStorage.removeItem('@user');
+      setUser('');
       navigate('/sign-in');
     }
   };

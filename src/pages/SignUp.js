@@ -30,14 +30,20 @@ function SignUp() {
         icon: 'error',
         title: 'Verifique se todos os dados inseridos são válidos',
       });
-    }
-    if (err.response.status === 409) {
+      setIsDisabled(false);
+    } else if (err.response.status === 409) {
       Swal.fire({
         icon: 'error',
         title: 'O e-mail inserido já está em uso',
       });
+      setIsDisabled(false);
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Tivemos um problema no servidor, tente novamente mais tarde',
+      });
+      setIsDisabled(false);
     }
-    setIsDisabled(false);
   };
 
   const submitSignUp = (event) => {

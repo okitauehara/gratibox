@@ -38,14 +38,20 @@ function SignIn() {
         icon: 'error',
         title: 'Verifique se todos os dados inseridos são válidos',
       });
-    }
-    if (err.response?.status === 401) {
+      setIsDisabled(false);
+    } else if (err.response?.status === 401) {
       Swal.fire({
         icon: 'error',
         title: 'Email ou senha não encontrados',
       });
+      setIsDisabled(false);
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Tivemos um problema no servidor, tente novamente mais tarde',
+      });
+      setIsDisabled(false);
     }
-    setIsDisabled(false);
   };
 
   const submitSignIn = (event) => {

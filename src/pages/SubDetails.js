@@ -1,12 +1,60 @@
 import styled from 'styled-components';
-import { useContext } from 'react';
+import Swal from 'sweetalert2';
+import { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UserContext from '../contexts/UserContext';
 import { PageStyle, Subtitle, Title } from '../styles/HomeStyles';
 import { Container, SubscriptionImg } from '../styles/SubscriptionStyle';
 import signatureImg from '../assets/signature.jpg';
+import { getSignature } from '../services/API';
 
 function SubDetails() {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const [subscription, setSubscription] = useState('');
+
+  useEffect(async () => {
+    if (!user) {
+      await Swal.fire({
+        title: 'Login necessário',
+        text: 'Para acessar essa rota, você precisa estar logado',
+        icon: 'warning',
+        showDenyButton: true,
+        confirmButtonText: 'Fazer Login',
+        denyButtonText: 'Ir para Home',
+        confirmButtonColor: '#8C97EA',
+        denyButtonColor: '#AAA',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          navigate('/sign-in');
+        } else {
+          navigate('/');
+        }
+      });
+    } else {
+      getSignature(user.token)
+        .then((res) => setSubscription(res.data))
+        .catch(async (err) => {
+          if (err.response?.status === 404) {
+            await Swal.fire({
+              icon: 'error',
+              title: 'Usuário não encontrado',
+            });
+            localStorage.removeItem('@user');
+            setUser('');
+            navigate('/sign-in');
+          } else {
+            await Swal.fire({
+              icon: 'error',
+              title: 'Houve um erro ao validar seu acesso a essa página, você será redirecionado',
+            });
+            localStorage.removeItem('@user');
+            setUser('');
+            navigate('/sign-in');
+          }
+        });
+    }
+  }, []);
 
   return (
     <PageStyle style={{ marginBottom: '30px' }}>
