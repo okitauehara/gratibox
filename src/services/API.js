@@ -27,8 +27,15 @@ function postSignature(token, planId, body) {
   return promise;
 }
 
+function getSignature(token) {
+  const config = createHeaders(token);
+  const promise = axios.get(`${BASE_URL}/subscriptions/`, config);
+  return promise;
+}
+
 export {
   postSignUp,
   postSignIn,
   postSignature,
+  getSignature,
 };
