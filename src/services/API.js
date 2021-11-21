@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://gratibox-api.herokuapp.com';
+const BASE_URL = 'http://localhost:4000';
+// https://gratibox-api.herokuapp.com
 
 function createHeaders(token) {
   const config = {
@@ -27,8 +28,15 @@ function postSignature(token, planId, body) {
   return promise;
 }
 
+function getSignature(token) {
+  const config = createHeaders(token);
+  const promise = axios.get(`${BASE_URL}/subscriptions/`, config);
+  return promise;
+}
+
 export {
   postSignUp,
   postSignIn,
   postSignature,
+  getSignature,
 };
