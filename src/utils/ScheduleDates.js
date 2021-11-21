@@ -5,15 +5,14 @@ const scheduleDates = (
   deliveryDate,
   signatureDate,
 ) => {
-  const removeTimeZone = 'T10:30:00-03:00';
   const auxDates = [];
   let count = 0;
   let date;
   let day;
   let addDate = 0;
 
-  if (plan === 'semanal') {
-    const signatureDay = new Date(signatureDate + removeTimeZone).getDay();
+  if (plan === 'Semanal') {
+    const signatureDay = new Date(signatureDate).getUTCDay();
 
     if (deliveryDate === 'monday') {
       day = 1;
@@ -44,7 +43,7 @@ const scheduleDates = (
       count += 1;
     }
   } else {
-    const signatureDay = new Date(signatureDate + removeTimeZone).getDate();
+    const signatureDay = new Date(signatureDate).getUTCDate();
 
     if (deliveryDate === 'day 01') {
       day = 1;
@@ -57,7 +56,7 @@ const scheduleDates = (
     if (day !== signatureDay) {
       const diff = day - signatureDay;
       if (diff < 0) {
-        date = `${new Date(signatureDate + removeTimeZone).getFullYear()}/${new Date(signatureDate + removeTimeZone).getMonth() + 2}/${day}`;
+        date = `${new Date(signatureDate).getUTCFullYear()}/${new Date(signatureDate).getUTCMonth() + 2}/${day}`;
       } else {
         addDate = diff;
         date = dayjs(signatureDate).add(addDate, 'day');
@@ -76,9 +75,9 @@ const scheduleDates = (
   }
 
   const nextDates = auxDates.map((value) => {
-    if (new Date(value + removeTimeZone).getDay() === 0) {
+    if (new Date(value).getUTCDay() === 0) {
       return dayjs(value).add(1, 'day').format('DD/MM/YYYY');
-    } if (new Date(value + removeTimeZone).getDay() === 6) {
+    } if (new Date(value).getUTCDay() === 6) {
       return dayjs(value).add(2, 'day').format('DD/MM/YYYY');
     }
     return dayjs(value).format('DD/MM/YYYY');

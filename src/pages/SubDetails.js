@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import { useContext, useEffect, useState } from 'react';
@@ -7,11 +8,13 @@ import { PageStyle, Subtitle, Title } from '../styles/HomeStyles';
 import { Container, SubscriptionImg } from '../styles/SubscriptionStyle';
 import signatureImg from '../assets/signature.jpg';
 import { getSignature } from '../services/API';
+import scheduleDates from '../utils/ScheduleDates';
 
 function SubDetails() {
   const { user, setUser } = useContext(UserContext);
   const navigate = useNavigate();
   const [subscription, setSubscription] = useState('');
+  const [nextDates, setNextDates] = useState('');
 
   useEffect(async () => {
     if (!user) {
@@ -33,7 +36,10 @@ function SubDetails() {
       });
     } else {
       getSignature(user.token)
-        .then((res) => setSubscription(res.data))
+        .then((res) => {
+          setSubscription(res.data);
+          setNextDates(scheduleDates(res.data.plan, res.data.delivery_date, res.data.signature_date));
+        })
         .catch(async (err) => {
           if (err.response?.status === 404) {
             await Swal.fire({
@@ -55,6 +61,9 @@ function SubDetails() {
         });
     }
   }, []);
+
+  console.log(subscription);
+  console.log(nextDates);
 
   return (
     <PageStyle style={{ marginBottom: '30px' }}>
