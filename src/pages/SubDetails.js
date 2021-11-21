@@ -9,6 +9,8 @@ import { Container, SubscriptionImg } from '../styles/SubscriptionStyle';
 import signatureImg from '../assets/signature.jpg';
 import { getSignature } from '../services/API';
 import scheduleDates from '../utils/ScheduleDates';
+import formatDate from '../utils/formatDate';
+import formatProductName from '../utils/formatProductName';
 
 function SubDetails() {
   const { user, setUser } = useContext(UserContext);
@@ -62,9 +64,6 @@ function SubDetails() {
     }
   }, []);
 
-  console.log(subscription);
-  console.log(nextDates);
-
   return (
     <PageStyle style={{ marginBottom: '30px' }}>
       <Title>
@@ -78,27 +77,25 @@ function SubDetails() {
         <SubsText>
           Plano:
           {' '}
-          <span>Mensal</span>
+          <span>{subscription.plan}</span>
         </SubsText>
         <SubsText>
           Data da assinatura:
           {' '}
-          <span>19/11/2021</span>
+          <span>{formatDate(subscription.signature_date)}</span>
         </SubsText>
         <SubsText>
           Próximas entregas:
         </SubsText>
         <NextDates>
-          dd/mm/aaaa
+          {nextDates[0]}
           <br />
-          dd/mm/aaaa
+          {nextDates[1]}
           <br />
-          dd/mm/aaaa
+          {nextDates[2]}
         </NextDates>
         <Products>
-          <Product>Chás</Product>
-          <Product>Produtos orgânicos</Product>
-          <Product>Incensos</Product>
+          {subscription.products?.map((product) => (<Product key={product}>{formatProductName(product)}</Product>))}
         </Products>
       </Container>
     </PageStyle>
