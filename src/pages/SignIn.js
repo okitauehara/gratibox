@@ -75,6 +75,7 @@ function SignIn() {
           value={values.email}
           onChange={handleChange}
           disabled={isDisabled}
+          autoFocus
         />
         <Input
           required
