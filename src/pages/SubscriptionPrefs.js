@@ -9,6 +9,7 @@ import UserContext from '../contexts/UserContext';
 import SignatureContext from '../contexts/SignatureContext';
 import * as S from '../styles/SubscriptionStyle';
 import formatUsername from '../utils/formatUsername';
+import SignOutIcon from '../utils/SignOutIcon';
 
 function SubscriptionPrefs() {
   const { user } = useContext(UserContext);
@@ -69,6 +70,7 @@ function SubscriptionPrefs() {
 
   return (
     <PageStyle style={{ marginBottom: '30px' }}>
+      <SignOutIcon />
       <Title>
         Bom te ver por aqui,
         {' '}

@@ -13,6 +13,7 @@ import formatProductName from '../utils/formatProductName';
 import Loading from '../utils/Loading';
 import formatUsername from '../utils/formatUsername';
 import * as S from '../styles/SubscriptionStyle';
+import SignOutIcon from '../utils/SignOutIcon';
 
 function SubDetails() {
   const { user, setUser } = useContext(UserContext);
@@ -71,6 +72,7 @@ function SubDetails() {
   }
   return (
     <PageStyle style={{ marginBottom: '30px' }}>
+      <SignOutIcon />
       <Title>
         Bom te ver por aqui,
         {' '}

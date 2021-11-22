@@ -10,6 +10,7 @@ import monthImg from '../assets/month_plan.jpg';
 import UserContext from '../contexts/UserContext';
 import SignatureContext from '../contexts/SignatureContext';
 import formatUsername from '../utils/formatUsername';
+import SignOutIcon from '../utils/SignOutIcon';
 
 function Plans() {
   const { user } = useContext(UserContext);
@@ -40,6 +41,7 @@ function Plans() {
 
   return (
     <PageStyle style={{ marginBottom: '30px' }}>
+      <SignOutIcon />
       <Title>
         Bom te ver por aqui,
         {' '}
