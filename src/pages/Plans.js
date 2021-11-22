@@ -8,12 +8,15 @@ import { PageStyle, Subtitle, Title } from '../styles/HomeStyles';
 import weekImg from '../assets/week_plan.jpg';
 import monthImg from '../assets/month_plan.jpg';
 import UserContext from '../contexts/UserContext';
+import SignatureContext from '../contexts/SignatureContext';
 
 function Plans() {
   const { user } = useContext(UserContext);
+  const { values, setValues } = useContext(SignatureContext);
   const navigate = useNavigate();
 
   useEffect(async () => {
+    setValues({ ...values, delivery_date: '', products: '' });
     if (!user) {
       await Swal.fire({
         title: 'Login necessário',
