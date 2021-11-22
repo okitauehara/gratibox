@@ -23,14 +23,20 @@ const Subtitle = styled.h2`
 const HomeImg = styled.img`
   width: 100vw;
   height: fit-content;
+  background-color: #4D65A8;
+  padding-bottom: 80px;
 `;
 
 const BackgroundColor = styled.div`
   width: 100vw;
+  height: 25%;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #4D65A8;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
 `;
 
 const Button = styled.button`

@@ -1,12 +1,14 @@
 /* eslint-disable max-len */
 import { useParams, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Loader from 'react-loader-spinner';
 import { useContext, useState, useEffect } from 'react';
 import { PageStyle, Subtitle, Title } from '../styles/HomeStyles';
 import signatureImg from '../assets/signature.jpg';
 import UserContext from '../contexts/UserContext';
 import SignatureContext from '../contexts/SignatureContext';
 import * as S from '../styles/SubscriptionStyle';
+import formatUsername from '../utils/formatUsername';
 
 function SubscriptionPrefs() {
   const { user } = useContext(UserContext);
@@ -14,6 +16,7 @@ function SubscriptionPrefs() {
   const { planId } = useParams();
   const [dateIsHidden, setDateIsHidden] = useState(true);
   const [productIsHidden, setProductIsHidden] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(false);
   const navigate = useNavigate();
 
   useEffect(async () => {
@@ -49,14 +52,17 @@ function SubscriptionPrefs() {
     }
   };
 
-  const verifyChoices = () => {
+  const verifyChoices = async () => {
+    setIsDisabled(true);
     if (!values.delivery_date || !values.products.length) {
-      Swal.fire({
+      await Swal.fire({
         icon: 'warning',
         title: 'Ops...',
         text: 'Precisamos que você selecione ao menos uma data de entrega e um produto que deseja receber.',
       });
+      setIsDisabled(false);
     } else {
+      setIsDisabled(false);
       navigate(`/subscription-address/${planId}`);
     }
   };
@@ -66,7 +72,7 @@ function SubscriptionPrefs() {
       <Title>
         Bom te ver por aqui,
         {' '}
-        {user?.name}
+        {formatUsername(user?.name)}
       </Title>
       <Subtitle>“Agradecer é arte de atrair coisas boas”</Subtitle>
       <S.Container>
@@ -78,11 +84,10 @@ function SubscriptionPrefs() {
             {planId === '1' ? 'Semanal' : 'Mensal' }
           </S.Text>
         </S.PlanBox>
-        <S.DropdownBox aspect={dateIsHidden}>
+        <S.DropdownBox aspect={dateIsHidden} onClick={() => setDateIsHidden(!dateIsHidden)}>
           <S.Visible>
             <S.Text>Entrega</S.Text>
             <S.ArrowDown
-              onClick={() => setDateIsHidden(!dateIsHidden)}
               hidden={dateIsHidden}
             />
           </S.Visible>
@@ -96,6 +101,7 @@ function SubscriptionPrefs() {
                 name="delivery_date"
                 value="monday"
                 onChange={handleChange}
+                disabled={isDisabled}
               />
               <S.Label htmlFor="monday">Segunda-feira</S.Label>
             </div>
@@ -106,6 +112,7 @@ function SubscriptionPrefs() {
                 name="delivery_date"
                 value="wednesday"
                 onChange={handleChange}
+                disabled={isDisabled}
               />
               <S.Label htmlFor="wednesday">Quarta-feira</S.Label>
             </div>
@@ -116,6 +123,7 @@ function SubscriptionPrefs() {
                 name="delivery_date"
                 value="friday"
                 onChange={handleChange}
+                disabled={isDisabled}
               />
               <S.Label htmlFor="friday">Sexta-feira</S.Label>
             </div>
@@ -129,6 +137,7 @@ function SubscriptionPrefs() {
                 name="delivery_date"
                 value="day 01"
                 onChange={handleChange}
+                disabled={isDisabled}
               />
               <S.Label htmlFor="01">Dia 01</S.Label>
             </div>
@@ -139,6 +148,7 @@ function SubscriptionPrefs() {
                 name="delivery_date"
                 value="day 10"
                 onChange={handleChange}
+                disabled={isDisabled}
               />
               <S.Label htmlFor="10">Dia 10</S.Label>
             </div>
@@ -149,16 +159,16 @@ function SubscriptionPrefs() {
                 name="delivery_date"
                 value="day 20"
                 onChange={handleChange}
+                disabled={isDisabled}
               />
               <S.Label htmlFor="20">Dia 20</S.Label>
             </div>
           </S.ExpandedDate>
         ) }
-        <S.DropdownBox aspect={productIsHidden}>
+        <S.DropdownBox aspect={productIsHidden} onClick={() => setProductIsHidden(!productIsHidden)}>
           <S.Visible>
             <S.Text>Quero receber</S.Text>
             <S.ArrowDown
-              onClick={() => setProductIsHidden(!productIsHidden)}
               hidden={productIsHidden}
             />
           </S.Visible>
@@ -171,6 +181,7 @@ function SubscriptionPrefs() {
               name="products"
               value="1"
               onChange={handleChangeCheckBox}
+              disabled={isDisabled}
             />
             <S.Label htmlFor="teas">Chás</S.Label>
           </div>
@@ -181,6 +192,7 @@ function SubscriptionPrefs() {
               name="products"
               value="2"
               onChange={handleChangeCheckBox}
+              disabled={isDisabled}
             />
             <S.Label htmlFor="incense">Incensos</S.Label>
           </div>
@@ -191,12 +203,13 @@ function SubscriptionPrefs() {
               name="products"
               value="3"
               onChange={handleChangeCheckBox}
+              disabled={isDisabled}
             />
             <S.Label htmlFor="organics">Produtos Orgânicos</S.Label>
           </div>
         </S.ExpandedCheck>
       </S.Container>
-      <S.Button onClick={verifyChoices}>Próximo</S.Button>
+      <S.Button onClick={verifyChoices}>{isDisabled ? <Loader type="ThreeDots" color="#ffffff" height={50} width={50} /> : 'Próximo' }</S.Button>
     </PageStyle>
   );
 }

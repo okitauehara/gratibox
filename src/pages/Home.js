@@ -9,7 +9,7 @@ function Home() {
     <S.PageStyle>
       <S.Title>Bem vindo ao GratiBox</S.Title>
       <S.Subtitle>
-        Receba em casa um box com chás, produtos organicos, incensos e muito mais...
+        Receba em casa um box com chás, produtos orgânicos, incensos e muito mais...
       </S.Subtitle>
       <S.HomeImg src={home} alt="Yoga Girl" />
       <S.BackgroundColor>

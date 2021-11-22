@@ -44,6 +44,9 @@ const Button = styled.button`
   color: #FFFFFF;
   margin-top: 60px;
   margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export {

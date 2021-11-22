@@ -11,6 +11,8 @@ import { getSignature } from '../services/API';
 import scheduleDates from '../utils/ScheduleDates';
 import formatDate from '../utils/formatDate';
 import formatProductName from '../utils/formatProductName';
+import Loading from '../utils/Loading';
+import formatUsername from '../utils/formatUsername';
 
 function SubDetails() {
   const { user, setUser } = useContext(UserContext);
@@ -64,12 +66,15 @@ function SubDetails() {
     }
   }, []);
 
+  if (!subscription && !nextDates) {
+    return (<Loading />);
+  }
   return (
     <PageStyle style={{ marginBottom: '30px' }}>
       <Title>
         Bom te ver por aqui,
         {' '}
-        {user?.name}
+        {formatUsername(user?.name)}
       </Title>
       <Subtitle>“Agradecer é arte de atrair coisas boas”</Subtitle>
       <Container style={{ alignItems: 'flex-start' }}>
@@ -117,12 +122,13 @@ const NextDates = styled.p`
   font-size: 18px;
   color: #E63C80;
   padding-left: 30px;
+  margin-top: 5px;
 `;
 
 const Products = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 const Product = styled.p`

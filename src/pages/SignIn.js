@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Loader from 'react-loader-spinner';
 import UserContext from '../contexts/UserContext';
 import { postSignIn } from '../services/API';
 import { Forms, Input, Button } from '../styles/AccessStyle';
@@ -75,6 +76,7 @@ function SignIn() {
           value={values.email}
           onChange={handleChange}
           disabled={isDisabled}
+          autoFocus
         />
         <Input
           required
@@ -85,7 +87,7 @@ function SignIn() {
           onChange={handleChange}
           disabled={isDisabled}
         />
-        <Button type="submit" disabled={isDisabled}>Login</Button>
+        <Button type="submit" disabled={isDisabled}>{isDisabled ? <Loader type="ThreeDots" color="#ffffff" height={60} width={60} /> : 'Login' }</Button>
       </Forms>
       <Link to="/sign-up" style={{ pointerEvents: isDisabled ? 'none' : 'all', color: '#FFFFFF' }}>
         <Redirect>Ainda não sou grato</Redirect>
