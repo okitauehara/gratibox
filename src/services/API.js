@@ -29,7 +29,13 @@ function postSignature(token, planId, body) {
 
 function getSignature(token) {
   const config = createHeaders(token);
-  const promise = axios.get(`${BASE_URL}/subscriptions/`, config);
+  const promise = axios.get(`${BASE_URL}/subscriptions`, config);
+  return promise;
+}
+
+function postSignOut(token) {
+  const config = createHeaders(token);
+  const promise = axios.delete(`${BASE_URL}/sign-out`, config);
   return promise;
 }
 
@@ -38,4 +44,5 @@ export {
   postSignIn,
   postSignature,
   getSignature,
+  postSignOut,
 };
