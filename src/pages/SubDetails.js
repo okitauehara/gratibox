@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +12,7 @@ import formatDate from '../utils/formatDate';
 import formatProductName from '../utils/formatProductName';
 import Loading from '../utils/Loading';
 import formatUsername from '../utils/formatUsername';
+import * as S from '../styles/SubscriptionStyle';
 
 function SubDetails() {
   const { user, setUser } = useContext(UserContext);
@@ -79,61 +79,32 @@ function SubDetails() {
       <Subtitle>“Agradecer é arte de atrair coisas boas”</Subtitle>
       <Container style={{ alignItems: 'flex-start' }}>
         <SubscriptionImg src={signatureImg} alt="Yoga Girl on Yellow Mat" style={{ margin: '0px auto' }} />
-        <SubsText>
+        <S.SubsText>
           Plano:
           {' '}
           <span>{subscription.plan}</span>
-        </SubsText>
-        <SubsText>
+        </S.SubsText>
+        <S.SubsText>
           Data da assinatura:
           {' '}
           <span>{formatDate(subscription.signature_date)}</span>
-        </SubsText>
-        <SubsText>
+        </S.SubsText>
+        <S.SubsText>
           Próximas entregas:
-        </SubsText>
-        <NextDates>
+        </S.SubsText>
+        <S.NextDates>
           {nextDates[0]}
           <br />
           {nextDates[1]}
           <br />
           {nextDates[2]}
-        </NextDates>
-        <Products>
-          {subscription.products?.map((product) => (<Product key={product}>{formatProductName(product)}</Product>))}
-        </Products>
+        </S.NextDates>
+        <S.Products>
+          {subscription.products?.map((product) => (<S.Product key={product}>{formatProductName(product)}</S.Product>))}
+        </S.Products>
       </Container>
     </PageStyle>
   );
 }
 
 export default SubDetails;
-
-const SubsText = styled.p`
-  font-size: 18px;
-  color: #4D65A8;
-
-  & span {
-    color: #E63C80;
-  }
-`;
-
-const NextDates = styled.p`
-  font-size: 18px;
-  color: #E63C80;
-  padding-left: 30px;
-  margin-top: 5px;
-`;
-
-const Products = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-`;
-
-const Product = styled.p`
-  font-size: 15px;
-  font-weight: 400;
-  color: #E63C80;
-  margin-top: 15px;
-`;
