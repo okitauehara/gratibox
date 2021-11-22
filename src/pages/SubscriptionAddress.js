@@ -43,21 +43,20 @@ function SubscriptionAddress() {
         }
       });
     }
-  }, []);
-
-  const searchCep = () => {
-    const cepCheck = values.cep.replace(/[^0-9]/g, '');
-    cep(cepCheck)
-      .then((res) => setCepData(res))
-      .catch(() => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Ops...',
-          text: 'O CEP não retornou resultados, verifique e tente novamente',
+    if (values.cep) {
+      const cepCheck = values.cep.replace(/[^0-9]/g, '');
+      cep(cepCheck)
+        .then((res) => setCepData(res))
+        .catch(() => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Ops...',
+            text: 'O CEP não retornou resultados, verifique e tente novamente',
+          });
+          setCepData('');
         });
-        setCepData('');
-      });
-  };
+    }
+  }, [values.cep]);
 
   const success = async (res) => {
     await Swal.fire({
@@ -154,15 +153,16 @@ function SubscriptionAddress() {
             autoFocus
           />
           <S.Inline>
-            <S.Input
+            <S.CepInput
               required
               placeholder="CEP (8 dígitos)"
               type="text"
               name="cep"
               value={values.cep}
               onChange={handleChange}
-              onBlur={searchCep}
               disabled={isDisabled}
+              minLength={8}
+              debounceTimeout={300}
             />
             <S.Input
               required

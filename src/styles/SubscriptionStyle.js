@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { DebounceInput } from 'react-debounce-input';
 import { TiArrowDown } from 'react-icons/ti';
 
 const Container = styled.div`
@@ -123,6 +124,29 @@ const Input = styled.input`
   }
 `;
 
+const CepInput = styled(DebounceInput)`
+  width: 100%;
+  height: 40px;
+  background-color: #E0D1ED;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  font-family: 'Roboto', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #4D65A8;
+  padding: 10px;
+  margin-bottom: 5px;
+
+  &::placeholder {
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #4D65A8;
+    opacity: 0.7;
+  }
+`;
+
 const Instruction = styled.p`
   font-size: 18px;
   font-weight: 700;
@@ -155,5 +179,6 @@ export {
   Button,
   Inline,
   Input,
+  CepInput,
   Instruction,
 };
