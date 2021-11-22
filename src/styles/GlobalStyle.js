@@ -38,6 +38,8 @@ body {
   font-weight: 700;
 }
 button {
+  box-shadow: 3px 3px 10px 0px rgba(69, 84, 188, 0.75);
+
   &:active {
     filter: brightness(1.1);
   }
