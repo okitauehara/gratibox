@@ -8,6 +8,7 @@ import signatureImg from '../assets/signature.jpg';
 import UserContext from '../contexts/UserContext';
 import SignatureContext from '../contexts/SignatureContext';
 import * as S from '../styles/SubscriptionStyle';
+import formatUsername from '../utils/formatUsername';
 
 function SubscriptionPrefs() {
   const { user } = useContext(UserContext);
@@ -71,7 +72,7 @@ function SubscriptionPrefs() {
       <Title>
         Bom te ver por aqui,
         {' '}
-        {user?.name}
+        {formatUsername(user?.name)}
       </Title>
       <Subtitle>“Agradecer é arte de atrair coisas boas”</Subtitle>
       <S.Container>

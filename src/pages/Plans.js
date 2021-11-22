@@ -9,6 +9,7 @@ import weekImg from '../assets/week_plan.jpg';
 import monthImg from '../assets/month_plan.jpg';
 import UserContext from '../contexts/UserContext';
 import SignatureContext from '../contexts/SignatureContext';
+import formatUsername from '../utils/formatUsername';
 
 function Plans() {
   const { user } = useContext(UserContext);
@@ -42,7 +43,7 @@ function Plans() {
       <Title>
         Bom te ver por aqui,
         {' '}
-        {user?.name}
+        {formatUsername(user?.name)}
       </Title>
       <Subtitle>Você ainda não assinou um plano, que tal começar agora?</Subtitle>
       <Container>

@@ -12,6 +12,7 @@ import scheduleDates from '../utils/ScheduleDates';
 import formatDate from '../utils/formatDate';
 import formatProductName from '../utils/formatProductName';
 import Loading from '../utils/Loading';
+import formatUsername from '../utils/formatUsername';
 
 function SubDetails() {
   const { user, setUser } = useContext(UserContext);
@@ -73,7 +74,7 @@ function SubDetails() {
       <Title>
         Bom te ver por aqui,
         {' '}
-        {user?.name}
+        {formatUsername(user?.name)}
       </Title>
       <Subtitle>“Agradecer é arte de atrair coisas boas”</Subtitle>
       <Container style={{ alignItems: 'flex-start' }}>

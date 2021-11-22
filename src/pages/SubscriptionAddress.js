@@ -11,6 +11,7 @@ import signatureImg from '../assets/signature.jpg';
 import SignatureContext from '../contexts/SignatureContext';
 import { Forms } from '../styles/AccessStyle';
 import { postSignature } from '../services/API';
+import formatUsername from '../utils/formatUsername';
 
 function SubscriptionAddress() {
   const { planId } = useParams();
@@ -128,7 +129,7 @@ function SubscriptionAddress() {
       <Title>
         Bom te ver por aqui,
         {' '}
-        {user?.name}
+        {formatUsername(user?.name)}
       </Title>
       <Subtitle>“Agradecer é arte de atrair coisas boas”</Subtitle>
       <Forms onSubmit={submitSignature}>
