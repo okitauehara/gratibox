@@ -36,6 +36,10 @@ body {
   color: #FFFFFF;
   font-family: 'Roboto', sans-serif;
   font-weight: 700;
+
+  &::-webkit-scrollbar {
+    width: 0px;
+  }
 }
 button {
   box-shadow: 3px 3px 10px 0px rgba(69, 84, 188, 0.75);
