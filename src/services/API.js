@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://gratibox-api.herokuapp.com';
+const BASE_URL = 'http://localhost:4000';
+// https://gratibox-api.herokuapp.com
 
 function createHeaders(token) {
   const config = {
