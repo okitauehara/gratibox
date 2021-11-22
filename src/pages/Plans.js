@@ -45,7 +45,7 @@ function Plans() {
       <Title>
         Bom te ver por aqui,
         {' '}
-        {formatUsername(user?.name)}
+        {user ? formatUsername(user?.name) : ''}
       </Title>
       <Subtitle>Você ainda não assinou um plano, que tal começar agora?</Subtitle>
       <Container>

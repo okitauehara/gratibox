@@ -76,7 +76,7 @@ function SubDetails() {
       <Title>
         Bom te ver por aqui,
         {' '}
-        {formatUsername(user?.name)}
+        {user ? formatUsername(user?.name) : ''}
       </Title>
       <Subtitle>“Agradecer é arte de atrair coisas boas”</Subtitle>
       <Container style={{ alignItems: 'flex-start' }}>

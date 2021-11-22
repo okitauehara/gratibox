@@ -1,9 +1,46 @@
 import styled from 'styled-components';
+import Swal from 'sweetalert2';
 import { MdOutlineWavingHand } from 'react-icons/md';
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import UserContext from '../contexts/UserContext';
+import { postSignOut } from '../services/API';
 
 export default function SignOutIcon() {
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const submitSignOut = async () => {
+    await Swal.fire({
+      title: 'Deseja deslogar de sua conta?',
+      text: 'Você precisará reinserir seus dados ao finalizar a compra',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#4D65A8',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        postSignOut(user.token)
+          .then(async () => {
+            localStorage.clear();
+            setUser('');
+            navigate('/sign-in');
+          })
+          .catch((err) => {
+            if (err.response?.status === 401) {
+              Swal.fire({
+                icon: 'error',
+                title: 'Usuário inexistente',
+              });
+            }
+          });
+      }
+    });
+  };
+
   return (
-    <FloatCircle>
+    <FloatCircle onClick={submitSignOut}>
       <Goodbye />
     </FloatCircle>
   );

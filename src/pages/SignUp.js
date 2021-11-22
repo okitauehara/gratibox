@@ -26,13 +26,13 @@ function SignUp() {
   };
 
   const error = (err) => {
-    if (err.response.status === 400) {
+    if (err.response?.status === 400) {
       Swal.fire({
         icon: 'error',
         title: 'Verifique se todos os dados inseridos são válidos',
       });
       setIsDisabled(false);
-    } else if (err.response.status === 409) {
+    } else if (err.response?.status === 409) {
       Swal.fire({
         icon: 'error',
         title: 'O e-mail inserido já está em uso',
