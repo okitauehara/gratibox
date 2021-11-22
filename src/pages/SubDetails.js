@@ -11,6 +11,7 @@ import { getSignature } from '../services/API';
 import scheduleDates from '../utils/ScheduleDates';
 import formatDate from '../utils/formatDate';
 import formatProductName from '../utils/formatProductName';
+import Loading from '../utils/Loading';
 
 function SubDetails() {
   const { user, setUser } = useContext(UserContext);
@@ -64,6 +65,9 @@ function SubDetails() {
     }
   }, []);
 
+  if (!subscription && !nextDates) {
+    return (<Loading />);
+  }
   return (
     <PageStyle style={{ marginBottom: '30px' }}>
       <Title>
