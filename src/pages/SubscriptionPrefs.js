@@ -78,11 +78,10 @@ function SubscriptionPrefs() {
             {planId === '1' ? 'Semanal' : 'Mensal' }
           </S.Text>
         </S.PlanBox>
-        <S.DropdownBox aspect={dateIsHidden}>
+        <S.DropdownBox aspect={dateIsHidden} onClick={() => setDateIsHidden(!dateIsHidden)}>
           <S.Visible>
             <S.Text>Entrega</S.Text>
             <S.ArrowDown
-              onClick={() => setDateIsHidden(!dateIsHidden)}
               hidden={dateIsHidden}
             />
           </S.Visible>
@@ -154,11 +153,10 @@ function SubscriptionPrefs() {
             </div>
           </S.ExpandedDate>
         ) }
-        <S.DropdownBox aspect={productIsHidden}>
+        <S.DropdownBox aspect={productIsHidden} onClick={() => setProductIsHidden(!productIsHidden)}>
           <S.Visible>
             <S.Text>Quero receber</S.Text>
             <S.ArrowDown
-              onClick={() => setProductIsHidden(!productIsHidden)}
               hidden={productIsHidden}
             />
           </S.Visible>
