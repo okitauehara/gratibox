@@ -59,12 +59,14 @@ function SubscriptionAddress() {
       });
   };
 
-  const success = async () => {
+  const success = async (res) => {
     await Swal.fire({
       icon: 'success',
       title: 'Assinatura Confirmada!',
       text: 'Confira a seguir o que reservamos para você :)',
     });
+    localStorage.clear();
+    localStorage.setItem('@user', JSON.stringify(res.data));
     navigate('/subdetails');
   };
 
