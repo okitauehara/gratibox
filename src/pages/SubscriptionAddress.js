@@ -12,6 +12,7 @@ import SignatureContext from '../contexts/SignatureContext';
 import { Forms } from '../styles/AccessStyle';
 import { postSignature } from '../services/API';
 import formatUsername from '../utils/formatUsername';
+import SignOutIcon from '../utils/SignOutIcon';
 
 function SubscriptionAddress() {
   const { planId } = useParams();
@@ -126,10 +127,11 @@ function SubscriptionAddress() {
 
   return (
     <PageStyle style={{ marginBottom: '30px' }}>
+      <SignOutIcon />
       <Title>
         Bom te ver por aqui,
         {' '}
-        {formatUsername(user?.name)}
+        {user ? formatUsername(user?.name) : ''}
       </Title>
       <Subtitle>“Agradecer é arte de atrair coisas boas”</Subtitle>
       <Forms onSubmit={submitSignature}>
