@@ -2,6 +2,7 @@
 import { useContext, useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Loader from 'react-loader-spinner';
 import cep from 'cep-promise';
 import UserContext from '../contexts/UserContext';
 import { PageStyle, Title, Subtitle } from '../styles/HomeStyles';
@@ -192,7 +193,7 @@ function SubscriptionAddress() {
             </S.PlanBox>
           </S.Inline>
         </S.Container>
-        <S.Button type="submit" disabled={isDisabled}>Finalizar</S.Button>
+        <S.Button type="submit" disabled={isDisabled}>{isDisabled ? <Loader type="ThreeDots" color="#ffffff" height={50} width={50} /> : 'Finalizar' }</S.Button>
       </Forms>
     </PageStyle>
   );

@@ -92,6 +92,9 @@ const Button = styled.button`
   font-weight: 700;
   color: #FFFFFF;
   margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Inline = styled.div`

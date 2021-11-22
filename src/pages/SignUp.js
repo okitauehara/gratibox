@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Loader from 'react-loader-spinner';
 import { PageStyle, Redirect, Title } from '../styles/HomeStyles';
 import { postSignUp } from '../services/API';
 import { Forms, Input, Button } from '../styles/AccessStyle';
@@ -103,7 +104,7 @@ function SignUp() {
           disabled={isDisabled}
           validation
         />
-        <Button type="submit" disabled={isDisabled}>Cadastrar</Button>
+        <Button type="submit" disabled={isDisabled}>{isDisabled ? <Loader type="ThreeDots" color="#ffffff" height={60} width={60} /> : 'Cadastrar' }</Button>
       </Forms>
       <Link to="/sign-in" style={{ pointerEvents: isDisabled ? 'none' : 'all', color: '#FFFFFF' }}>
         <Redirect>Já sou grato</Redirect>
