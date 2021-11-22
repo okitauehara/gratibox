@@ -25,7 +25,6 @@ const HomeImg = styled.img`
   height: fit-content;
   background-color: #4D65A8;
   padding-bottom: 80px;
-  
 `;
 
 const BackgroundColor = styled.div`

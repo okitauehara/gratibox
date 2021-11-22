@@ -117,12 +117,13 @@ const NextDates = styled.p`
   font-size: 18px;
   color: #E63C80;
   padding-left: 30px;
+  margin-top: 5px;
 `;
 
 const Products = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 `;
 
 const Product = styled.p`
